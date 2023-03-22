@@ -1,0 +1,47 @@
+.check-land-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .check-land-input {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .check-land-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .check-land-button:hover {
+    background-color: #3e8e41;
+  }
+  
+  .check-land-results {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .check-land-results p {
+    margin: 5px;
+    font-size: 16px;
+  }
+  
+  .check-land-results span {
+    font-weight: bold;
+  }
+  
+  button:disabled {
+    background-color: gray;
+    color: white;
+  }
+  

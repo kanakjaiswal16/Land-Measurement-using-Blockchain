@@ -1,0 +1,67 @@
+#inputFields {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  #inputFields label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  #inputFields input[type="text"] {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  button {
+    padding: 0.5rem;
+    border-radius: 3px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  button:hover {
+    background-color: #0069d9;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+  
+  input[type="number"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 0.5rem;
+  }
+  
+  span {
+    margin-left: 0.5rem;
+  }
+  
+  #OwnerAddress {
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  #map {
+    margin-top: 1rem;
+  }
+ 
+  
+  input {
+    margin-bottom: 10px;
+  }
+  

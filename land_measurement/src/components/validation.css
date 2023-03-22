@@ -1,0 +1,71 @@
+/* .valid{
+    color: green;
+}
+.invalid{
+    color: red;
+}
+input[type="text"] {
+    color: darkcyan;
+  }
+
+.Link{
+    background-color: green;
+    color: white;
+}   */
+
+label {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  input {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #00bfff;
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.8);
+  }
+  
+  p {
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  .valid {
+    color: #00bfff;
+  }
+  
+  .invalid {
+    color: #ff4500;
+  }
+  
+  button.Link {
+    /* display: block; */
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #00bfff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  button.Link:hover {
+    background-color: #1e90ff;
+  }
+  
