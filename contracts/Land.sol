@@ -23,21 +23,22 @@ struct land {
 
 contract Land {
     land l1;
-    uint num;
-    address immutable owner;
+    uint public num;
+    address public owner;
 
     mapping(uint => bytes32[]) inspectorListHash;
     mapping(uint => bytes32[]) PreviousOwnerHash;
     mapping(string => bool) landAdded;
     mapping(uint => land) LandRecords;
+    mapping(string => land) LandRecordsString;
     mapping(uint => address[]) inspectorList;
-    mapping(address => bool) isInspector;
+    mapping(address => bool) public isInspector;
     mapping(uint => address[]) PreviousOwner;
     mapping(string => uint) alreadyRegistered;
-    mapping(bytes32 => uint) public AdharLink;
+    mapping(bytes32 => uint) AdharLink;
     mapping(uint => bytes32) AdharTOHash;
     mapping(address => bool) OnlyOneTime;
-    mapping(address => bytes32) Hash;
+    mapping(address => bytes32) public Hash;
 
     constructor() {
         owner = msg.sender;
@@ -80,10 +81,13 @@ contract Land {
             "Aadhar must be linked"
         );
         require(
-            l1.CurrentOwner != Hash[_CurrentOwner],
+            LandRecordsString[coordinates].CurrentOwner != Hash[_CurrentOwner],
             "You are already owner"
         );
-        require(_inspector != _CurrentOwner);
+        require(
+            _inspector != _CurrentOwner,
+            "inspector can't measure his own land"
+        );
         uint temp = num;
         if (landAdded[coordinates] == true) {
             num = alreadyRegistered[coordinates];
@@ -99,6 +103,7 @@ contract Land {
         inspectorList[num].push(_inspector);
         PreviousOwner[num].push(_CurrentOwner);
         LandRecords[num] = l1;
+        LandRecordsString[coordinates] = l1;
 
         if (landAdded[coordinates] == false) {
             alreadyRegistered[coordinates] = num;
@@ -126,6 +131,12 @@ contract Land {
 
     function FetchLandRecords(uint x) public view returns (land memory) {
         return LandRecords[x];
+    }
+
+    function FetchLandRecordsString(
+        string memory x
+    ) public view returns (land memory) {
+        return LandRecordsString[x];
     }
 
     function Owner() public view onlyOwner returns (bool) {
