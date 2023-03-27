@@ -16,7 +16,7 @@ export default function Navbar() {
         </h3>
         <ul>
           <li>
-            <Link to="/landInterface">Land</Link>
+            <Link to="/checkLand">Land</Link>
           </li>
           <li>
             <Link to="/validation">User</Link>
