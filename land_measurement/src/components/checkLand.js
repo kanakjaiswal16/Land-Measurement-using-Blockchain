@@ -7,6 +7,8 @@ function CheckLand({ contract, provider, account }) {
   const [recordCoordinates, SetrecordCoordinates] = useState(null);
   const [recordInspector, SetrecordInspector] = useState(null);
   const [recordOwner, SetrecordOwner] = useState(null);
+  const [output, setOutput] = useState("");
+  const [prevButton, setPrevButton] = useState(false);
 
   function ConvertDate(a) {
     const epochTime = a;
@@ -26,6 +28,7 @@ function CheckLand({ contract, provider, account }) {
   async function CheckLandRecords() {
     try {
       let records = await contract.FetchLandRecords(landID);
+      setPrevButton(false);
       SetrecordCoordinates(records.coordinates);
       SetrecordInspector(records.LastInspector);
       SetrecordOwner(records.CurrentOwner);
@@ -37,10 +40,46 @@ function CheckLand({ contract, provider, account }) {
         alert("Land ID doesn't exist");
       }
     } catch (error) {
-      console.log(error.message);
+      alert("Land ID doesn't exist");
     }
   }
+
+  async function CheckPreviousOwner() {
+    try {
+      const result = await contract.CheckPreviousOwner(landID);
+      setPrevButton(true);
+      let newOutput = "";
+      result.forEach(function (element) {
+        newOutput += element + "\n";
+      });
+      setOutput(newOutput);
+      if (newOutput === "") {
+        alert("LandID doesn't exist");
+      }
+    } catch (error) {
+      alert("LandID doesn't exist");
+    }
+  }
+
+  async function CheckPreviousInspector() {
+    try {
+      const result = await contract.CheckPreviousInspector(landID);
+      setPrevButton(true);
+      let newOutput = "";
+      result.forEach(function (element) {
+        newOutput += element + "\n";
+      });
+      setOutput(newOutput);
+      if (newOutput === "") {
+        alert("LandID doesn't exist");
+      }
+    } catch (error) {
+      alert("LandID doesn't exist");
+    }
+  }
+
   const isLandIDEmpty = landID.trim() === "";
+
   return (
     <div className="check-land-container">
       <label htmlFor="land-id">Enter Land ID:</label>
@@ -55,7 +94,8 @@ function CheckLand({ contract, provider, account }) {
         recordT !== "1/1/1970, 5:30:00 am IST" &&
         recordCoordinates !== null &&
         recordInspector !== null &&
-        recordOwner !== null && (
+        recordOwner !== null &&
+        prevButton === false && (
           <div className="check-land-results">
             <p>
               <span>Coordinates:</span> {recordCoordinates}
@@ -71,12 +111,34 @@ function CheckLand({ contract, provider, account }) {
             </p>
           </div>
         )}
+
+      {prevButton === true && output !== "" && (
+        <div className="check-land-results">
+          <pre>{output}</pre>
+        </div>
+      )}
       <button
         disabled={isLandIDEmpty}
         className="check-land-button"
         onClick={CheckLandRecords}
       >
         Check
+      </button>
+
+      <button
+        disabled={isLandIDEmpty}
+        className="check-land-button"
+        onClick={CheckPreviousOwner}
+      >
+        Owner History
+      </button>
+
+      <button
+        disabled={isLandIDEmpty}
+        className="check-land-button"
+        onClick={CheckPreviousInspector}
+      >
+        Inspector History
       </button>
     </div>
   );
