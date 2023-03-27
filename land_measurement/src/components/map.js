@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./map.css";
+import jsPDF from "jspdf";
 
 export default function Geomap({ contract, provider, account }) {
   const [map, setMap] = useState(null);
@@ -7,6 +8,7 @@ export default function Geomap({ contract, provider, account }) {
   const [landLocationsStrings, setLandLocationsStrings] = useState([]);
   const [ownerAddress, setOwnerAddress] = useState("");
   const [isInspector, setIsInspector] = useState(false);
+  const [receipt, setReciept] = useState(false);
 
   async function checkInspector() {
     try {
@@ -49,6 +51,7 @@ export default function Geomap({ contract, provider, account }) {
   }
 
   function generateInputFields() {
+    setReciept(false);
     const numVertices = parseInt(document.getElementById("numVertices").value);
     const inputFieldsDiv = document.getElementById("inputFields");
     inputFieldsDiv.innerHTML = "";
@@ -120,9 +123,30 @@ export default function Geomap({ contract, provider, account }) {
     setOwnerAddress(input);
   }
 
+  async function generateReciept() {
+    const result = await contract.FetchLandRecordsString(landLocationsStrings);
+    const landID = result.land_id;
+    const coordinates = result.coordinates;
+    const Inspector = result.LastInspector;
+    const Owner = result.CurrentOwner;
+
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Proof of Land Measurement", 80, 20);
+    doc.setFontSize(12);
+    doc.text(`Land ID: ${landID}`, 20, 40);
+    doc.text(`Coordinates: ${coordinates}`, 20, 50);
+    doc.text(`Inspector: ${Inspector}`, 20, 60);
+    doc.text(`Owner: ${Owner}`, 20, 70);
+
+    // Save PDF receipt
+    doc.save("receipt.pdf");
+  }
+
   async function AddLandRecords() {
     try {
       await contract.MeasureLand(landLocationsStrings, ownerAddress);
+      setReciept(true);
     } catch (error) {
       if (error.message.includes("You are already owner")) {
         window.alert("Measurement has already been done");
@@ -172,6 +196,9 @@ export default function Geomap({ contract, provider, account }) {
           </div>
 
           <button onClick={AddLandRecords}>ADD LAND</button>
+          <button disabled={!receipt} onClick={generateReciept}>
+            Generate Reciept
+          </button>
           <div id="map" style={{ height: "400px", width: "100%" }}></div>
         </div>
       )}
