@@ -9,8 +9,6 @@ import AdminInterface from "./components/adminInterface";
 import VerifyInspector from "./components/verifyInspector";
 import CheckLand from "./components/checkLand";
 import RemoveInspector from "./components/removeInspector";
-import LandInterface from "./components/landInterface";
-import CheckPreviousOwner from "./components/checkPreviousOwner";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -62,16 +60,6 @@ function App() {
           }
         />
         <Route
-          path="/checkPreviousOwner"
-          element={
-            <CheckPreviousOwner
-              contract={contract}
-              provider={provider}
-              account={account}
-            />
-          }
-        />
-        <Route
           path="/map"
           element={
             <Geomap contract={contract} provider={provider} account={account} />
@@ -112,17 +100,6 @@ function App() {
           path="/removeInspector"
           element={
             <RemoveInspector
-              contract={contract}
-              provider={provider}
-              account={account}
-            />
-          }
-        />
-
-        <Route
-          path="/landInterface"
-          element={
-            <LandInterface
               contract={contract}
               provider={provider}
               account={account}
