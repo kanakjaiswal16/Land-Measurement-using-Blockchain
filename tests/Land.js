@@ -232,4 +232,21 @@ describe("Land", () => {
     expect(result.LastInspector).to.equal(await land.Hash(Inspector.address));
     expect(result.CurrentOwner).to.equal(await land.Hash(nonOwner.address));
   });
+
+  it("FetchLandRecordsString", async () => {
+    const coordinates = "sfjsgjsgj";
+    num = 1200;
+    aadhar1 = 123456789012;
+    aadhar2 = 123456789013;
+    await land.connect(owner).addInspector(Inspector.address, aadhar1);
+    await land.connect(nonOwner).linkAadhar(aadhar2);
+    await land.connect(Inspector).MeasureLand(coordinates, nonOwner.address);
+
+    const result = await land.FetchLandRecordsString(coordinates);
+
+    expect(result.land_id).to.equal(1200);
+    expect(result.coordinates).to.equal(coordinates);
+    expect(result.LastInspector).to.equal(await land.Hash(Inspector.address));
+    expect(result.CurrentOwner).to.equal(await land.Hash(nonOwner.address));
+  });
 });
